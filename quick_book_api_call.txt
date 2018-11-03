@@ -40,3 +40,10 @@ request(options, function (error, response, body) {
 'Postman-Token': 'd5e832e7-69b9-4d85-8e83-f0e46035719e' 要换成 clientID 和 clientKey
 clientID:  Q0HY9epaqSa8F5DXSWIPxlbNLvMHDt83M9YafPCnNKNuoaSYav
  ClientSecret:  8FjQi3ddlJEYhYzltRaA7aYu2vqHWj8JtW39NRml
+
+The following values need to be updated when sending the API call:
+-Amount: 61,
+StringValue: 'Chicken-Fila'
+Name: 'MerchantName',
+Name: 'TransactionDate',
+Name: 'TransactionType',
