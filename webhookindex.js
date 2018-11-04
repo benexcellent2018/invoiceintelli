@@ -182,9 +182,10 @@ express.post('/', (req, res) => {
                 // var invoiceId = body['Invoice']['Id'];
                 console.log(invoiceId);
                 // console.log(body);
+                var invoiceInfos = MerchantNameParam+ ' '+ TransactionDateParam + ' ' + TransactionTypeParam;
 
                 //update the description with invoiceId
-                let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=' + invoiceId + ' ' + mycategories.toString();
+                let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=' + invoiceId + ' ' + invoiceInfos + ' ' + mycategories.toString();
                 console.log(mydescription);
                 console.log('===begin update desc');
 
