@@ -4,23 +4,28 @@
 //export GOOGLE_APPLICATION_CREDENTIALS="./thermal-beach-200005-9887a61c82fc.json"
 
 const vision = require('@google-cloud/vision');
-
+// const util = require('util');            // Deep inspection of objects
 // Creates a client
-const client = new vision.ImageAnnotatorClient();
-const fileName = './receipt3.jpg'
-client
-    .textDetection(fileName)
+const clientGoogle = new vision.ImageAnnotatorClient();
+const fileName = './receipt2.jpg';
+// const fileName = 'https://api.box.com/2.0/files/343825971204/content?access_token=mETSm0F7zWJixgJU2OlqJLG9GF8IEdKW';
+clientGoogle.textDetection(fileName)
     .then(results => {
+      console.log(results);
       const detections = results[0].textAnnotations;
-      console.log('Text:');
-      detections.forEach(text => processText(text));
+      console.log(detections);
+      var gResult = {name:'', date:'',amount:''};
+      detections.forEach(text => processText(text, gResult));
+      console.log(gResult);
     })
     .catch(err => {
       console.error('ERROR:', err);
     });
 
-function processText(text) {
+function processText(text, gResult) {
+  // console.log(util.inspect(text, false, null));
   const data = text.description;
+  // console.log(data);
   // console.log(data);
   if (data.length > 100) {
     var arr = data.split(/\r?\n/);
@@ -60,6 +65,9 @@ function processText(text) {
         amount = arr[i];
       }
     }
+    gResult['name'] = name;
+    gResult['date'] = date;
+    gResult['amount'] = amount;
     console.log(name);
     console.log(date);
     console.log(amount);

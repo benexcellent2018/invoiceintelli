@@ -9,7 +9,8 @@
     "box-node-sdk": "^1.22.0",
     "clarifai": "^2.9.0",
     "envs": "^0.1.6",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "scripts": {
