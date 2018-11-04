@@ -137,10 +137,12 @@ express.post('/', (req, res) => {
   // Capture file ID and tokens from Box event
   let body = req.body;
   let fileId = body.source.id;
+  let fileName = body.source.name;
   console.log(fileId);
+  console.log(fileName);
   // console.log(body);
   console.log("===body source===");
-  console.log(body.source);
+  // console.log(body.source);
 
   // Create new Box SDK instance
   const configJSON = JSON.parse(fs.readFileSync('config.json'));
@@ -198,7 +200,9 @@ express.post('/', (req, res) => {
               request(options, function (error, response, body) {
                 if (error) throw new Error(error);
                 // console.log(body);
-                var invoiceId = '153';
+                // var invoiceId = '153';
+                var invoiceId = getDefaulInvoiceId(fileName);
+                console.log('=== invoiceId: ' + invoiceId);
                 if(body && body['Invoice'] && body['Invoice']['Id']) {
                   invoiceId = body['Invoice']['Id'];
                 }
