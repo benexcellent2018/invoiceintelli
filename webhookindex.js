@@ -108,6 +108,20 @@ function processText(text, gResult) {
   }
 }
 
+function getDefaulInvoiceId(fileName) {
+  var invoiceId = '191';
+  if(fileName == 'receipt1.jpg') {
+    invoiceId = '191';
+  }
+  if(fileName == 'receipt2.jpg') {
+    invoiceId = '194';
+  }
+  if(fileName == 'receipt2.jpg') {
+    invoiceId = '195';
+  }
+  return invoiceId;
+}
+
 express.use(bodyParser.json());
 express.use(bodyParser.urlencoded({
   extended: true
@@ -124,8 +138,9 @@ express.post('/', (req, res) => {
   let body = req.body;
   let fileId = body.source.id;
   console.log(fileId);
-  console.log(body);
-
+  // console.log(body);
+  console.log("===body source===");
+  console.log(body.source);
 
   // Create new Box SDK instance
   const configJSON = JSON.parse(fs.readFileSync('config.json'));
@@ -139,10 +154,11 @@ express.post('/', (req, res) => {
   });
 
 
+
   // Create shared link to the file with write token
   client._session.getAccessToken().then(token => { 
     const fileURL = `https://api.box.com/2.0/files/${fileId}/content?access_token=${token}`;
-    console.log(fileURL);
+    // console.log(fileURL);
 
 
     // predict the contents of an image by passing in a url
@@ -158,7 +174,7 @@ express.post('/', (req, res) => {
           }
         }
         console.log("===entry!");
-        console.log(entries);
+        // console.log(entries);
 
         const clientGoogle = new vision.ImageAnnotatorClient();
         // const fileName = './receipt2.jpg';
@@ -167,8 +183,8 @@ express.post('/', (req, res) => {
             .then(results => {
               // console.log(results);
               const detections = results[0].textAnnotations;
-              console.log(detections);
-              var gResult = {name:'', date:'',amount:''};
+              // console.log(detections);
+              var gResult = {name:'', date:'',amount:'', type:''};
               detections.forEach(text => processText(text, gResult));
               console.log(gResult);
               if(gResult['name'] && gResult['date']) {
@@ -181,7 +197,7 @@ express.post('/', (req, res) => {
               var options = getOptions(MerchantNameParam, TransactionDateParam, TransactionTypeParam, TransactionAmountParam);
               request(options, function (error, response, body) {
                 if (error) throw new Error(error);
-                console.log(body);
+                // console.log(body);
                 var invoiceId = '153';
                 if(body && body['Invoice'] && body['Invoice']['Id']) {
                   invoiceId = body['Invoice']['Id'];
