@@ -58,6 +58,11 @@ express.post('/', (req, res) => {
         console.log("===entry!");
         console.log(entries);
 
+        client.files.update(fileId, {description : entries.join(' ')})
+        	.then(updatedFile => {
+        		console.log(updatedFile);
+        	});
+
         // Set Box metadata template information
         const metadataTemplate = 'boxSkillsCards';
         const metadata = { 
