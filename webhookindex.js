@@ -58,7 +58,7 @@ express.post('/', (req, res) => {
         console.log("===entry!");
         console.log(entries);
 
-        client.files.update(fileId, {description : entries.join(' ')})
+        client.files.update(fileId, {description : entries.toString()})
         	.then(updatedFile => {
         		console.log(updatedFile);
         	});
