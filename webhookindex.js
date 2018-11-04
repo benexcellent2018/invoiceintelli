@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser') // Body Parser for JSON encoded bodies
 const boxSDK = require('box-node-sdk');   // Box SDK
 const clarifai = require('clarifai');     // Clarifai SDK
-const config = require('./config.js')     // Keys and config
+// const config = require('./config.js')     // Keys and config
 const express = require('express')();     // Express
 const fs = require('fs');                 // File system access
 const http = require('http');             // HTTP server
@@ -17,8 +17,9 @@ express.use(bodyParser.urlencoded({
 express.post('/', (req, res) => {
   // Capture file ID and tokens from Box event
   let body = req.body;
-  console.log(body);
   let fileId = body.source.id;
+  console.log(fileId);
+  console.log(body);
 
 
   // Create new Box SDK instance
@@ -29,13 +30,14 @@ express.post('/', (req, res) => {
 
   // Instantiate a new Clarifai app instance
   const app = new clarifai.App({
-    apiKey: YOUR CLARIFAI API KEY
+    apiKey: '9cef0d5edde8408bab2139236e825297'
   });
 
 
   // Create shared link to the file with write token
   client._session.getAccessToken().then(token => { 
     const fileURL = `https://api.box.com/2.0/files/${fileId}/content?access_token=${token}`;
+    console.log(fileURL);
 
 
     // predict the contents of an image by passing in a url
@@ -88,6 +90,6 @@ express.post('/', (req, res) => {
 
 // Create server
 const port = process.env.PORT || 3000;
-http.createServer(express).listen(port, () => {
+http.createServer(express).listen(port, '0.0.0.0', () => {
   console.log(`Server started: Listening on port ${port}`);
 });

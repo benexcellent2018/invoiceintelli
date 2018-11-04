@@ -4,6 +4,9 @@
   "description": "invoice intelligence",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "box-node-sdk": "^1.22.0",
+    "clarifai": "^2.9.0",
     "express": "^4.16.4"
   },
   "devDependencies": {},
