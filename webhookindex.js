@@ -83,6 +83,11 @@ express.post('/', (req, res) => {
         const jsonPatch = [{ op: 'replace', path: '/cards/0', value: metadata.cards[0] }];
         client.files.addMetadata(fileId, client.metadata.scopes.GLOBAL, metadataTemplate, metadata).then((err, metadata) => {
             console.log("ADDING----------------------------------------------------------------");
+            if(err) {
+              console.log(err);
+            } else {
+              console.log(metadata);
+            }
           }).catch(function (err) {
             if (err.response && err.response.body && err.response.body.code === 'tuple_already_exists') {
               console.log("CONFLICT----------------------------------------------------------------");
