@@ -159,7 +159,7 @@ express.post('/', (req, res) => {
         // const fileName = 'https://api.box.com/2.0/files/343825971204/content?access_token=mETSm0F7zWJixgJU2OlqJLG9GF8IEdKW';
         clientGoogle.textDetection(fileURL)
             .then(results => {
-              console.log(results);
+              // console.log(results);
               const detections = results[0].textAnnotations;
               console.log(detections);
               var gResult = {name:'', date:'',amount:''};
@@ -185,9 +185,12 @@ express.post('/', (req, res) => {
 
                 //update the description with invoiceId
                 let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=' + invoiceId + ' ' + mycategories.toString();
+                console.log(mydescription);
+                console.log('===begin update desc');
 
                 client.files.update(fileId, {description : mydescription})
                 	.then(updatedFile => {
+                    console.log('===finish update desc');
                 		console.log(updatedFile);
                 	});
 
