@@ -14,8 +14,9 @@ var authToken = 'Bearer eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..cbmj0Jv
 var MerchantNameParam= 'Chicken-Fila';
 var TransactionDateParam = '2018-10-02';
 var TransactionTypeParam = 'Food';
+var TransactionAmountParam = '61';
 
-function getOptions(MerchantNameParam, TransactionDateParam, TransactionTypeParam) {
+function getOptions(MerchantNameParam, TransactionDateParam, TransactionTypeParam, TransactionAmountParam) {
   var options = { method: 'POST',
     url: 'https://sandbox-quickbooks.api.intuit.com/v3/company/193514839712279/invoice',
     qs: { minorversion: '25' },
@@ -29,7 +30,7 @@ function getOptions(MerchantNameParam, TransactionDateParam, TransactionTypePara
        'User-Agent': '{{UserAgent}}' },
     body:
      { Line:
-        [ { Amount: 61,
+        [ { Amount: TransactionAmountParam,
             DetailType: 'SalesItemLineDetail',
             SalesItemLineDetail: { ItemRef: { value: '1', name: 'test custom field' } } } ],
        CustomerRef: { value: '58' },
@@ -60,17 +61,21 @@ function processText(text, gResult) {
     var name;
     var date;
     var amount;
+    var entityType;
     // console.log(data.length);
     for (let i = 0; i < arr.length; i++) {
       //Print each iteration to the console
       if (arr[i].includes('Restaurant')){
         name = arr[i];
+        entityType = 'Restaurant';
       }
       if (arr[i].includes('Pharmacy')) {
         name = arr[i].substring(0, 15);
+        entityType = 'Pharmacy';
       }
       if (arr[i].includes('Grill')) {
         name = arr[i];
+        entityType = 'Grill';
       }
 
       if (arr[i].includes('Fri')) {
@@ -96,6 +101,7 @@ function processText(text, gResult) {
     gResult['name'] = name;
     gResult['date'] = date;
     gResult['amount'] = amount;
+    gResult['type'] = entityType;
     console.log(name);
     console.log(date);
     console.log(amount);
@@ -168,10 +174,11 @@ express.post('/', (req, res) => {
               if(gResult['name'] && gResult['date']) {
                 MerchantNameParam = gResult['name'];
                 TransactionDateParam = gResult['date'];
-                TransactionTypeParam = gResult['amount'];
+                TransactionTypeParam = gResult['type'];
+                TransactionAmountParam = gResult['amount'];
               }
               //quickbooks Url
-              var options = getOptions(MerchantNameParam, TransactionDateParam, TransactionTypeParam);
+              var options = getOptions(MerchantNameParam, TransactionDateParam, TransactionTypeParam, TransactionAmountParam);
               request(options, function (error, response, body) {
                 if (error) throw new Error(error);
                 console.log(body);
