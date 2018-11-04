@@ -57,8 +57,9 @@ express.post('/', (req, res) => {
         }
         console.log("===entry!");
         console.log(entries);
+        let mydescription = entries.toString() + ' quickbook invoice link:   https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=150';
 
-        client.files.update(fileId, {description : entries.toString()})
+        client.files.update(fileId, {description : mydescription})
         	.then(updatedFile => {
         		console.log(updatedFile);
         	});

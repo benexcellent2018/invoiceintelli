@@ -13,13 +13,13 @@ client
     .then(results => {
       const detections = results[0].textAnnotations;
       console.log('Text:');
-      detections.forEach(text => process(text));
+      detections.forEach(text => processText(text));
     })
     .catch(err => {
       console.error('ERROR:', err);
     });
 
-function process(text) {
+function processText(text) {
   const data = text.description;
   // console.log(data);
   if (data.length > 100) {
