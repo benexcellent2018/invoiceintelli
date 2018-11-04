@@ -50,14 +50,16 @@ express.post('/', (req, res) => {
       function(response) {
         // Capture all categories
         let entries = [];
+        let mycategories = [];
         for (let category of response.outputs[0].data.concepts) {
           if (category.value > 0.9) {
             entries.push({ type: 'text', text: category.name });
+            mycategories.push(category.name);
           }
         }
         console.log("===entry!");
         console.log(entries);
-        let mydescription = entries.toString() + ' quickbook invoice link:   https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=150';
+        let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=150 ' + mycategories.toString();
 
         client.files.update(fileId, {description : mydescription})
         	.then(updatedFile => {
