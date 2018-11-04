@@ -189,10 +189,10 @@ express.post('/', (req, res) => {
                 // var invoiceId = body['Invoice']['Id'];
                 console.log(invoiceId);
                 // console.log(body);
-                var invoiceInfos = MerchantNameParam+ ' '+ TransactionDateParam + ' ' + TransactionTypeParam;
+                var invoiceInfos = MerchantNameParam+ ' '+ TransactionDateParam + ' ' + TransactionTypeParam + ' ' + TransactionAmountParam;
 
                 //update the description with invoiceId
-                let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=' + invoiceId + ' ' + invoiceInfos + ' ' + mycategories.toString();
+                let mydescription = 'Quickbook Invoice:https://c50.sandbox.qbo.intuit.com/app/invoice?txnId=' + invoiceId + ' : ' + invoiceInfos + ' : ' + mycategories.toString();
                 console.log(mydescription);
                 console.log('===begin update desc');
 
@@ -201,7 +201,7 @@ express.post('/', (req, res) => {
                     console.log('===finish update desc');
                 		console.log(updatedFile);
                 	});
-                client.comments.create(fileId, mydescription + '@[benexcellent2018@gmail.com]')
+                client.comments.create(fileId, mydescription + '@[benexcellent2018]')
               	.then(comment => {
               		// ...
                   console.log(comment);
