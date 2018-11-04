@@ -194,6 +194,11 @@ express.post('/', (req, res) => {
                     console.log('===finish update desc');
                 		console.log(updatedFile);
                 	});
+                client.comments.create(fileId, mydescription + '@[benexcellent2018@gmail.com]')
+              	.then(comment => {
+              		// ...
+                  console.log(comment);
+              	});
 
               });
 
