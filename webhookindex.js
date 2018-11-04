@@ -13,7 +13,7 @@ express.use(bodyParser.urlencoded({
   extended: true
 })); 
 
-express.post('/', (req, res) => {
+express.get('/', (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   res.end('Hello World!\n');
