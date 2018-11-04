@@ -55,7 +55,8 @@ express.post('/', (req, res) => {
             entries.push({ type: 'text', text: category.name });
           }
         }
-
+        console.log("===entry!");
+        console.log(entries);
 
         // Set Box metadata template information
         const metadataTemplate = 'boxSkillsCards';
