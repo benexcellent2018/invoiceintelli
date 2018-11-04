@@ -13,6 +13,11 @@ express.use(bodyParser.urlencoded({
   extended: true
 })); 
 
+express.post('/', (req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World!\n');
+});
 
 express.post('/', (req, res) => {
   // Capture file ID and tokens from Box event
